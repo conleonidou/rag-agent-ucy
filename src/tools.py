@@ -62,7 +62,10 @@ def grade_documents(wrapper: RunContextWrapper[RagAgentContext]) -> str:
             response = client.responses.parse(
                         model="gpt-4.1-mini",
                         input=[
-                            {"role": "system", "content": "Extract the relevance of the document in relation to the user question."},
+                            {
+                                "role": "system", 
+                                "content": "Extract the relevance of the document in relation to the user question. The document intent should be relevant to the user question."
+                            },
                             {
                                 "role": "user",
                                 "content": f"Document: {doc}\n\nUser question: {question}",
