@@ -103,3 +103,24 @@ The `Makefile` provides convenient shortcuts for common tasks:
 
 *   `make sync`: Creates the virtual environment (if needed) and installs/syncs dependencies using `uv sync`. Run this after cloning or pulling changes that modify `pyproject.toml`.
 *   `make serve`: Runs the main agent application (`main.py`) using `uv run`.
+
+## Agent Orchestration Flow
+
+The RAG Agent system follows a structured flow for processing user queries and retrieving relevant information:
+
+![Agent Orchestration Flow](agent_graph.png)
+
+### Flow Description:
+
+1. **Entry Point**: The system starts with the `Triage Agent`
+2. **RAG Agent Processing**:
+   - The `Triage Agent` delegates the query to the `RAG Agent`
+   - The `RAG Agent` executes two tools in sequence:
+     1. `retrieve_general_documents`: Fetches potentially relevant documents from the vector store
+     2. `grade_documents`: Evaluates and filters the retrieved documents for relevance
+3. **Final Processing**: 
+   - The `RAG Agent` returns control to the `Triage Agent`
+   - The `Triage Agent` formulates the final response based on the relevant documents
+
+This orchestration ensures efficient document retrieval and relevance assessment before presenting information to the user.
+
